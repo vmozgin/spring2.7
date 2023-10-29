@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  demo:
+    image: demo
+    container_name: demo
+    tty: true
+    stdin_open: true
+    ports:
+      - "8888:8888"
+    environment:
+      - STUDENTS_INITIALIZE=false
