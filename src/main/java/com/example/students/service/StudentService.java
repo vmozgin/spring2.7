@@ -6,11 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
@@ -19,8 +15,6 @@ public class StudentService {
 
 	private final ApplicationEventPublisher publisher;
 
-	@Value("${students.initialize}")
-	private Boolean initialize;
 	private List<Student> students = new ArrayList<>();
 
 	public StudentService(ApplicationEventPublisher publisher) {
@@ -61,13 +55,10 @@ public class StudentService {
 		return "List of students cleared";
 	}
 
-	@EventListener(ContextRefreshedEvent.class)
 	public void initializeStudents() {
-		if (initialize) {
-			students.add(new Student(UUID.randomUUID(), "Vasya", "Pupkin", 15));
-			students.add(new Student(UUID.randomUUID(), "Kirill", "Kleshin", 16));
-			students.add(new Student(UUID.randomUUID(), "Stepan", "Ivanov", 23));
-			System.out.println("Initialize students complete");
-		}
+		students.add(new Student(UUID.randomUUID(), "Vasya", "Pupkin", 15));
+		students.add(new Student(UUID.randomUUID(), "Kirill", "Kleshin", 16));
+		students.add(new Student(UUID.randomUUID(), "Stepan", "Ivanov", 23));
+		System.out.println("Initialize students complete");
 	}
 }
